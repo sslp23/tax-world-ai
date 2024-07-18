@@ -39,7 +39,7 @@ class AI():
 
             return self.stream_data(bot_response.text)
         else:
-            return 'API Key invalid'
+            return self.stream_data('API Key invalid')
         
     
 ai = AI()
