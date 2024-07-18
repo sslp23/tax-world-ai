@@ -1,11 +1,11 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import streamlit as st
 import chromadb
 import google.generativeai  as genai
 import time
-
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 class AI():
     def __init__(self):
