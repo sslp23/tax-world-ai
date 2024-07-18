@@ -37,7 +37,7 @@ class AI():
                 generation_config=genai.GenerationConfig(temperature=0.3)
             )
 
-            return self.stream_data(bot_response.text)
+            return self.stream_data(bot_response.text), bot_response.text
         else:
             return self.stream_data('API Key invalid')
         
@@ -65,7 +65,8 @@ if 'full_response' not in app:
 if 'api_key' not in app:
     app['api_key'] = ''
 
-api_key = st.sidebar.text_input("Input your Google GenAI API Key", type="password")
+api_key = st.sidebar.text_input("Input your Google GenAI API Key", placeholder = 'Enter your API Key',  type="password")
+
 if st.sidebar.button("Submit"):
     st.session_state.api_key = api_key
     # Clear the input field by setting the widget value to an empty string
@@ -86,12 +87,13 @@ if prompt:
 
     app["full_response"] = ""
     answer = ai.answer(app["messages"], app["api_key"]) 
-    st.chat_message("assistant", avatar="🧠").write_stream(answer)
-    app["full_response"] = ' '.join(answer)
+    st.chat_message("assistant", avatar="🧠").write_stream(answer[0])
+    app["full_response"] = answer[1]
+    
     app["messages"].append({"role":"assistant", "content":app["full_response"]})
 
     ### Show sidebar history
     app['history'].append("😎: "+prompt)
-    app['history'].append("🧠: "+app["full_response"])
+    app['history'].append("🧠: "+app["full_response"]+'\n')
     st.sidebar.markdown("<br />".join(app['history'])+"<br /><br />", unsafe_allow_html=True)
 
