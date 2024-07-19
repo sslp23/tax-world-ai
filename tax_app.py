@@ -32,14 +32,17 @@ class AI():
         if API_KEY != '':
             genai.configure(api_key = API_KEY)
             model_system = genai.GenerativeModel('gemini-1.5-flash-latest', system_instruction=comp_prompt)
-            bot_response = model_system.generate_content(
-                prompt,
-                generation_config=genai.GenerationConfig(temperature=0.3)
-            )
+            try:
+                bot_response = model_system.generate_content(
+                    prompt,
+                    generation_config=genai.GenerationConfig(temperature=0.3)
+                )
 
-            return self.stream_data(bot_response.text), bot_response.text
+                return self.stream_data(bot_response.text), bot_response.text
+            except:
+                return self.stream_data('API Key invalid. This project uses Google Gemini API. Get your API Key on: https://ai.google.dev/gemini-api/docs/api-key?hl=pt-br'), 'API Key Invalid'
         else:
-            return self.stream_data('API Key invalid')
+            return self.stream_data('API Key invalid. This project uses Google Gemini API. Get your API Key on: https://ai.google.dev/gemini-api/docs/api-key?hl=pt-br'), 'API Key Invalid'
         
     
 ai = AI()
