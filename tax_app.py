@@ -51,6 +51,19 @@ st.set_page_config(
         page_icon="🌍",
     )
 
+st.markdown("""
+
+    <style>
+
+
+    .css-1iyw2u1 {
+            display: none;
+        }
+
+    </style>
+
+    """, unsafe_allow_html=True)
+            
 st.sidebar.title("🌍 Tax Systems AI")
 
 
@@ -71,8 +84,7 @@ if 'api_key' not in app:
 api_key = st.sidebar.text_input("Input your Google GenAI API Key", placeholder = 'Enter your API Key',  type="password")
 
 if st.sidebar.button("Submit"):
-    st.session_state.api_key = api_key
-    # Clear the input field by setting the widget value to an empty string
+    app['api_key'] = api_key
 
 
 for msg in app["messages"]:
@@ -98,5 +110,7 @@ if prompt:
     ### Show sidebar history
     app['history'].append("😎: "+prompt)
     app['history'].append("🧠: "+app["full_response"]+'\n')
-    st.sidebar.markdown("<br />".join(app['history'])+"<br /><br />", unsafe_allow_html=True)
+
+with st.sidebar.expander("See chat history:", expanded=False):
+    st.markdown("<br />".join(app['history'])+"<br /><br />", unsafe_allow_html=True)
 
