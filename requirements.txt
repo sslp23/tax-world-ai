@@ -2,3 +2,4 @@ streamlit
 chromadb
 google-generativeai
 pysqlite3-binary
+protobuf~=3.19.0
