@@ -2,4 +2,4 @@ streamlit==1.30.0
 chromadb
 google-generativeai
 pysqlite3-binary
-protobuf~=3.19.0
+protobuf~=3.20.0
